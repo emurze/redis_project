@@ -1,0 +1,31 @@
+version: '3.5'
+services:
+  redis:
+    image: 'redis:7'
+    container_name: 'redis'
+    networks:
+      - backend
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  redis_project:
+    build: .
+    image: 'redis_project:1'
+    container_name: 'redis_project'
+    command: >
+      sh -c "cd src && 
+             poetry run mypy main.py &&
+             poetry run python3 main.py create_article"
+    env_file:
+      - env/.env
+    networks:
+      - backend
+    volumes:
+      - ./src:/service/src
+
+networks:
+  backend:
+
+volumes:
+  redis_data:
