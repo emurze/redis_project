@@ -1,4 +1,5 @@
 import abc
+from collections import namedtuple
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -8,16 +9,10 @@ class BaseRedisRepository(abc.ABC):
     def get_conn(self): ...
 
 
-@dataclass
-class User:
-    id: int
+WSGIRequest = namedtuple('WSGIRequest', 'user article group token item')
 
+User = namedtuple('User', 'id')
 
-@dataclass
-class Article:
-    title: str
-    link: str
-    user: User
-    time: datetime
-    votes: int
+Article = namedtuple('Article', 'id')
 
+Group = namedtuple('Group', 'name')

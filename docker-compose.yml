@@ -16,7 +16,7 @@ services:
     command: >
       sh -c "cd src && 
              poetry run mypy main.py &&
-             poetry run python3 main.py create_article"
+             poetry run python3 main.py update_token"
     env_file:
       - env/.env
     networks:
